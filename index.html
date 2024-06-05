@@ -87,11 +87,55 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "788b1df6152540db9f028c1099b4499b"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+    TrackJS.track('Testing TrackJS!');
+  </script>                          
+
+  <script>
+    class ValidationError extends Error{
+      constructor(message){
+        super(message);
+        this.name="ValidationError";
+      }
+    }
+
+    window.onerror=function(message, source, lineno, colno, error){
+      console.error("Global Error Caught:", message);
+      return true;
+    }
+    // window.onerror = function(event, source, lineno, colno, error) {
+    //   console.log("Global Error:" + event);
+    //   console.log("Source: " + source);
+    // }
+
+    // function test(){
+    //   throw new ValidationError("Opps!");
+    // }
+
+    // try{
+    //   test();
+    // }catch(err){
+    //   alert(err.message);
+    // }
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
-      let output = document.querySelector('output');
+      try{
+        let output = document.querySelector('output');
+        if(!output){
+          throw new Error("Not exist");
+        }
+      }catch(err){
+        console.error("output not exist");
+      }finally{
+        console.log("Continue execute");
+      }
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
@@ -102,7 +146,59 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    (errorBtns[0]).addEventListener('click',()=>{console.log("Sucessful!")});
+    errorBtns[1].addEventListener('click',()=>{console.error("Error: something went wrong!")});
+    errorBtns[2].addEventListener('click',()=>{console.count("Count demo")});
+    errorBtns[3].addEventListener('click',()=>{console.warn("A warning!")});
+    errorBtns[4].addEventListener('click',()=>{console.assert(false, "It's false!")});
+    errorBtns[5].addEventListener('click',()=>{console.clear()});
+    errorBtns[6].addEventListener('click',()=>{console.dir(document.querySelector('form'))});
+    errorBtns[7].addEventListener('click',()=>{console.dirxml(document.querySelector('form'))});
+    errorBtns[8].addEventListener('click',()=>{
+      console.group("Group demo: Start");
+      console.log("Info inside group");
+    });
+    errorBtns[9].addEventListener('click',()=>{console.groupEnd()});
+    errorBtns[10].addEventListener('click', () => {console.table([{ a: 1, b: 'Y' }, { a: 'Z', b: 2 }]);});
+    errorBtns[11].addEventListener('click', () => {console.time("Timer demo")});
+    errorBtns[12].addEventListener('click', () => console.timeEnd("Timer demo"));
+    errorBtns[13].addEventListener('click', () =>{
+      function deepest() {
+        console.trace("Console Trace Demo");
+      }
+
+      function deeper() {
+        deepest();
+      }
+
+      function deep() {
+        deeper();
+      }
+
+      function handleBtnClick() {
+        deep();
+      }
+
+      handleBtnClick();
+    });
+    errorBtns[14].addEventListener('click', ()=> {
+      // try {
+      //   hahaShabi();
+      // } catch (error) {
+      //   console.error("Sadly an global error happened my friend", error);
+      // }
+      //console.error("Sadly an global error happened my friend", error);
+      throw new Error("Sadly an global error happened my friend");
+    });
   </script>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "788b1df6152540db9f028c1099b4499b"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                          
 </body>
 
 </html>
